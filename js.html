@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>js</title>
+</head>
+<body>
+ 
+	<div id="time">
+		
+	</div>
+
+	<script type="text/javascript">
+		
+		
+
+
+		function getRes(time) {
+			if (time < 0) {
+				return '参数错误'
+			}
+
+			// 毫秒转换为妙，time为时间戳
+			time = Math.floor(time / 1000)
+			// 年份  = 整个时间戳 / （ 一小时 * 24 * 三十天 * 十二个月 ）
+			var year = Math.floor(time / (3600 * 24 * 12 * 30))
+
+			// 剩余月份的时间戳 = 年份余数时间戳 % （一小时 * 24 * 三十天 * 十二个月）
+			var monthS = time % (3600 * 24 * 12 * 30)
+			// 月份 = 年份余数时间戳 / 一小时 * 24 * 三十天）
+			month = Math.floor(monthS / (3600 * 24 * 30))
+
+
+			// 剩余天数的时间戳 = 剩余月份的时间戳 % （一小时 * 24 * 三十天）
+			var dayS = monthS % (3600 * 24 * 30)
+			// 剩余的天数 = 剩余天数的时间戳 / （ 一小时 * 24 ）
+			day = Math.floor(dayS / (3600 * 24))
+
+			// 剩余的小时时间戳 = 剩余天数的时间戳 % (一小时 * 24)
+			var hourS = dayS % ( 3600 * 24 )
+			// 剩余的小时 = 剩余小时的时间戳 / 3600秒
+			hour = Math.floor(hourS / 3600)
+
+			// 剩余的分钟时间戳 = 剩余的小时时间戳 % 3600秒
+			var minute = hourS % 3600
+			// 剩余的时间 = 剩余的分钟时间戳 / 60
+			minute = Math.floor(minute / 60)
+
+			// 剩余的秒数 = 总时间戳 % 60
+			var second = time % 60
+			var checkTime = year + '年' + month + '月' + day + '日' + hour + '时' + minute + '分' + second + '秒'
+			return checkTime
+		}
+
+
+
+		var flag = ''
+
+		flag = setInterval(()=>{
+			var endTime = new Date('2020-12-08 19:30:00')
+
+			var nowTime = new Date()
+
+			var check = endTime.getTime() - nowTime.getTime()
+			var time = getRes(check)
+			if (time == 0) {
+				document.getElementById('time').innerHTML = '倒计时结束'
+				clearInterval(check)
+			}
+			document.getElementById('time').innerHTML = time
+		},1000)
+		
+
+	</script>
+</body>
+</html>
